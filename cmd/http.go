@@ -66,7 +66,6 @@ func dependencyInject() Dependency {
 		UserRepo: UserRepo,
 	}
 	logoutAPI := &api.LogoutHandler{
-
 		LogoutService: logoutSvc,
 	}
 

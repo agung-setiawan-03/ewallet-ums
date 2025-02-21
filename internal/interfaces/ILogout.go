@@ -10,6 +10,8 @@ type ILogoutService interface {
 	Logout(ctx context.Context, token string) error
 }
 
+
+
 type ILogoutHandler interface {
 	Logout(*gin.Context)
 }
