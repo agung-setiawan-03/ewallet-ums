@@ -9,15 +9,14 @@ import (
 )
 
 type Healthcheck struct {
-	HelathcheckServices interfaces.IHealthcheckServices
+	HealthcheckServices interfaces.IHealthcheckServices
 }
 
-func (api *Healthcheck) HelathcheckHandlerHTTP(c *gin.Context) {
-	msg, err := api.HelathcheckServices.HealthcheckServices()
+func (api *Healthcheck) HealthcheckHandlerHTTP(c *gin.Context) {
+	msg, err := api.HealthcheckServices.HealthcheckServices()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, nil)
 		return
 	}
-
 	helpers.SendResponseHTTP(c, http.StatusOK, msg, nil)
 }
