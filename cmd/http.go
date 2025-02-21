@@ -21,7 +21,10 @@ func ServeHTTP() {
 	userV1 := r.Group("/users/v1")
 	userV1.POST("/register", dependency.RegisterAPI.Register)
 	userV1.POST("/login", dependency.LoginAPI.Login)
-	userV1.DELETE("/logout", dependency.MiddlewareValidateAuth, dependency.LogoutAPI.Logout)
+
+	userV1WithAuth := userV1.Use()
+	userV1WithAuth.DELETE("/logout", dependency.MiddlewareValidateAuth, dependency.LogoutAPI.Logout)
+	userV1WithAuth.PUT("/refresh-token", dependency.MiddlewareRefreshToken, dependency.RefreshTokenAPI.RefreshToken)
 
 	err := r.Run(":" + helpers.GetEnv("PORT", ""))
 	if err != nil {
@@ -36,6 +39,7 @@ type Dependency struct {
 	RegisterAPI     interfaces.IRegisterHandler
 	LoginAPI        interfaces.ILoginHandler
 	LogoutAPI       interfaces.ILogoutHandler
+	RefreshTokenAPI interfaces.IRefreshTokenHandler
 }
 
 func dependencyInject() Dependency {
@@ -69,12 +73,20 @@ func dependencyInject() Dependency {
 		LogoutService: logoutSvc,
 	}
 
+	refreshTokenSvc := &services.RefreshTokenService{
+		UserRepo: UserRepo,
+	}
+	refreshTokenAPI := &api.RefreshTokenHandler{
+		RefreshTokenService: refreshTokenSvc,
+	}
+
 	return Dependency{
-		UserRepository: UserRepo,
-		HealthcheckAPI: healthcheckAPI,
-		RegisterAPI:    registerAPI,
-		LoginAPI:       loginAPI,
-		LogoutAPI:      logoutAPI,
+		UserRepository:  UserRepo,
+		HealthcheckAPI:  healthcheckAPI,
+		RegisterAPI:     registerAPI,
+		LoginAPI:        loginAPI,
+		LogoutAPI:       logoutAPI,
+		RefreshTokenAPI: refreshTokenAPI,
 	}
 
 }
