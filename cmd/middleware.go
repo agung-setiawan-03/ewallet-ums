@@ -40,5 +40,4 @@ func (d *Dependency) MiddlewareValidateAuth(ctx *gin.Context) {
 	ctx.Set("token", claim)
 
 	ctx.Next()
-	return
 }
