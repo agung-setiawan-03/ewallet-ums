@@ -12,4 +12,3 @@ type IHealthcheckHandler interface {
 
 type IHealthcheckRepo interface {
 }
-
