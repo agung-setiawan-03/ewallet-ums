@@ -79,3 +79,4 @@ func (r *UserRepository) GetUserSessionByRefreshToken(ctx context.Context, refre
 	return session, nil
 
 }
+

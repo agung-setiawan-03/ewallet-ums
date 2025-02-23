@@ -45,3 +45,4 @@ func (s *TokenValidationHandler) ValidateToken(ctx context.Context, req *tokenva
 		},
 	}, nil
 }
+
