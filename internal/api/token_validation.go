@@ -30,6 +30,7 @@ func (s *TokenValidationHandler) ValidateToken(ctx context.Context, req *tokenva
 
 	claimToken, err := s.TokenValidationService.TokenValidation(ctx, token)
 	if err != nil {
+		log.Error("Failed to validate token: ", err)
 		return &tokenvalidation.TokenResponse{
 			Message: err.Error(),
 		}, nil
