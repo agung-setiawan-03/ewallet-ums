@@ -5,6 +5,7 @@ import (
 	"ewallet-ums/external"
 )
 
-type IWallet interface {
+type IExternal interface {
 	CreateWallet(ctx context.Context, userID int) (*external.Wallet, error)
+	SendNotification(ctx context.Context, recipient string, templateName string, placeHolder map[string]string) error
 }

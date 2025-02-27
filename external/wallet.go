@@ -17,11 +17,11 @@ type Wallet struct {
 	Balance float64 `json:"balance"`
 }
 
-type ExtWallet struct {
+type External struct {
 
 }
 
-func (e *ExtWallet) CreateWallet(ctx context.Context, userID int) (*Wallet, error) {
+func (e *External) CreateWallet(ctx context.Context, userID int) (*Wallet, error) {
 	req := Wallet{UserID: userID}
 	payload, err := json.Marshal(req)
 	if err != nil {
